@@ -10,7 +10,11 @@ import lombok.Data;
 @JsonDeserialize(builder = CharacterVo.CharacterVoBuilder.class)
 public class CharacterVo {
 
+    private Long id;
+
     private String name;
+
+    private String avatar;
 
     @JsonPOJOBuilder(withPrefix = "")
     public static final class CharacterVoBuilder {

@@ -5,26 +5,28 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
-import renanpr.poc.feign.client.SwapiClient;
+import renanpr.poc.feign.client.MockapiClient;
 import renanpr.poc.feign.vo.CharacterVo;
 
-import java.util.Optional;
-import java.util.Random;
+import java.util.List;
 
 @RestController
-@RequestMapping(value = "/swapi", produces = MediaType.APPLICATION_JSON_VALUE)
-public class SwapiController {
+@RequestMapping(value = "/mockapi", produces = MediaType.APPLICATION_JSON_VALUE)
+public class MockapiController {
 
-    private final SwapiClient swapiClient;
+    private final MockapiClient mockapiClient;
 
-    public SwapiController(SwapiClient swapiClient) {
-        this.swapiClient = swapiClient;
+    public MockapiController(MockapiClient mockapiClient) {
+        this.mockapiClient = mockapiClient;
     }
 
     @GetMapping(value = "/people/{characterId}")
     public CharacterVo getCharacterById(@PathVariable("characterId") Long characterId) {
-        final Long id = Optional.ofNullable(characterId)
-                .orElse(new Random().nextLong());
-        return swapiClient.getCharacterById(id);
+        return mockapiClient.getCharacterById(characterId);
+    }
+
+    @GetMapping(value = "/people")
+    public List<CharacterVo> getCharacters() {
+        return mockapiClient.getCharacters();
     }
 }
